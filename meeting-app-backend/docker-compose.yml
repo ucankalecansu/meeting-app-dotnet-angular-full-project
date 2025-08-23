@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - meeting-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
+  # .NET Development Container
+  dotnet-dev:
+    image: mcr.microsoft.com/dotnet/sdk:7.0
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: sleep infinity
+    networks:
+      - meeting-network
+    depends_on:
+      - sqlserver
+
+networks:
+  meeting-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:

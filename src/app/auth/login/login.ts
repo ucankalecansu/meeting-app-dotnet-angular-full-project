@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.html',
 })
 export class LoginComponent {
-  form = { email: '', passwordHash: '' };
+  form = { email: '', password: '' };
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -33,5 +33,8 @@ export class LoginComponent {
         alert('Giriş başarısız');
       },
     });
+
+    // this.router.navigate(['/meetings']); // meetings'e yönlendir
+
   }
 }

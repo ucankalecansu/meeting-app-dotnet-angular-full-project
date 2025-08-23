@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth';
+  private apiUrl = 'http://localhost:4000/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +18,10 @@ export class AuthService {
 
   saveToken(token: string) {
     localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   logout() {

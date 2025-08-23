@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './register.html',
 })
 export class RegisterComponent {
-  form = { firstName: '', lastName: '', email: '', phone: '', passwordHash: '' };
+  form = { firstName: '', lastName: '', email: '', phone: '', password: '' };
 
   constructor(private auth: AuthService, private router: Router) {}
 

@@ -15,6 +15,11 @@ export class MeetingListComponent implements OnInit {
   meetings: any[] = [];
   loading = false;
 
+  // Pagination için gerekli değişkenler
+  currentPage = 1;
+  pageSize = 5;
+  totalItems = 0;
+
   // kullanıcı listesi
   users: any[] = [];
   usersLoading = false;
@@ -35,6 +40,20 @@ export class MeetingListComponent implements OnInit {
     status: ''                      // 'active' | 'cancelled' | ''
   };
 
+  isParticipantsOpen = false;
+
+toggleParticipants() { 
+  this.isParticipantsOpen = !this.isParticipantsOpen; 
+  // Açıldığında kullanıcıları yükle
+  if (this.isParticipantsOpen && this.users.length === 0) {
+    this.fetchUsers();
+  }
+}
+
+closeParticipants() { 
+  this.isParticipantsOpen = false; 
+}
+
   constructor(
     private meetingService: MeetingService,
     private userService: UserService,
@@ -50,6 +69,7 @@ export class MeetingListComponent implements OnInit {
     this.meetingService.getMeetings().subscribe({
       next: (data) => {
         this.meetings = data;
+        this.totalItems = data.length;
         this.loading = false;
       },
       error: () => {
@@ -57,6 +77,33 @@ export class MeetingListComponent implements OnInit {
         alert('Toplantılar yüklenemedi');
       }
     });
+  }
+
+  // Sayfalama için yardımcı fonksiyonlar
+  get paginatedMeetings(): any[] {
+    const startItem = (this.currentPage - 1) * this.pageSize;
+    const endItem = this.currentPage * this.pageSize;
+    return this.meetings.slice(startItem, endItem);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
   deleteMeeting(id: number) {

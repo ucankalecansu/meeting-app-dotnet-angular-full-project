@@ -1,0 +1,34 @@
+/* tablo */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* dropdown içeriği */
+  .participants-dropdown {
+    max-height: 320px;
+    overflow: hidden;
+  }
+  
+  .participants-list {
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid #e9ecef;
+    border-radius: .375rem;
+    padding: .25rem;
+    background: #fff;
+  }
+  
+  @media (max-width: 576px) {
+    .participants-dropdown {
+      width: calc(100vw - 2rem);
+    }
+  }
+  
+  /* modal backdrop (inline style ile de var ama garanti olsun) */
+  .modal {
+    display: block;
+    background: rgba(0,0,0,.5);
+  }
+  

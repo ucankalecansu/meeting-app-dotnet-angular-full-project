@@ -1,26 +1,37 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import * as bcrypt from 'bcryptjs';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink], 
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
 })
 export class LoginComponent {
   form = { email: '', passwordHash: '' };
 
-  onSubmit(loginForm: NgForm) {
-  if(loginForm.invalid) {
-    return;
-  }
-  const hashedPassword = bcrypt.hashSync(this.form.passwordHash, 10);
-  const payload = { ...this.form, passwordHash: hashedPassword };
+  constructor(private auth: AuthService, private router: Router) {}
 
-  console.log('Login data:', payload);
-    // TODO: backend'e gönder
+  onSubmit(loginForm: NgForm) {
+    if (loginForm.invalid) return;
+
+    this.auth.login(this.form).subscribe({
+      next: (res: any) => {
+        // backend token dönüyorsa sakla
+        if (res.token) {
+          this.auth.saveToken(res.token);
+          this.router.navigate(['/meetings']); // meetings'e yönlendir
+        } else {
+          alert('Token alınamadı, login başarısız');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Giriş başarısız');
+      },
+    });
   }
 }

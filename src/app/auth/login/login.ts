@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,10 @@ export class LoginComponent {
   if(loginForm.invalid) {
     return;
   }
-  console.log('Login data:', this.form);
+  const hashedPassword = bcrypt.hashSync(this.form.passwordHash, 10);
+  const payload = { ...this.form, passwordHash: hashedPassword };
+
+  console.log('Login data:', payload);
     // TODO: backend'e gönder
   }
 }

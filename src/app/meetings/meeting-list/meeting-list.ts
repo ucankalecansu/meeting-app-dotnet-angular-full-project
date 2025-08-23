@@ -79,7 +79,6 @@ closeParticipants() {
     });
   }
 
-  // Sayfalama için yardımcı fonksiyonlar
   get paginatedMeetings(): any[] {
     const startItem = (this.currentPage - 1) * this.pageSize;
     const endItem = this.currentPage * this.pageSize;

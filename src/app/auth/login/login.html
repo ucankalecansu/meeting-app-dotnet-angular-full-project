@@ -1,20 +1,31 @@
 <div class="d-flex align-items-center justify-content-center vh-100 bg-light">
-    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
-      <h3 class="text-center mb-4">🔑 Giriş Yap</h3>
-      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input [(ngModel)]="form.email" name="email" type="email" class="form-control" placeholder="ornek@gmail.com" required />
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+    <h3 class="text-center mb-4">🔑 Giriş Yap</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input [(ngModel)]="form.email" name="email" type="email"
+               class="form-control" required email #email="ngModel" />
+        <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+          Geçerli bir email giriniz
         </div>
-        <div class="mb-3">
-          <label class="form-label">Şifre</label>
-          <input [(ngModel)]="form.passwordHash" name="passwordHash" type="password" class="form-control" placeholder="••••••••" required />
-        </div>
-        <button class="btn btn-primary w-100">Giriş Yap</button>
-      </form>
-      <div class="text-center mt-3">
-        <small>Hesabın yok mu? <a routerLink="/register">Kayıt Ol</a></small>
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Şifre</label>
+        <input [(ngModel)]="form.passwordHash" name="passwordHash" type="password"
+               class="form-control" required minlength="6" #password="ngModel" />
+        <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
+          Şifre en az 6 karakter olmalıdır
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100" [disabled]="loginForm.invalid">Giriş Yap</button>
+    </form>
+
+    <div class="text-center mt-3">
+      <small>Hesabın yok mu? <a class="btn btn-link p-0" routerLink="/register">Kayıt Ol</a></small>
     </div>
   </div>
-  
+</div>

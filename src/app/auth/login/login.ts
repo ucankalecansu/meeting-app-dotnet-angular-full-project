@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -11,4 +11,12 @@ import { RouterLink } from '@angular/router';
 })
 export class LoginComponent {
   form = { email: '', passwordHash: '' };
+
+  onSubmit(loginForm: NgForm) {
+  if(loginForm.invalid) {
+    return;
+  }
+  console.log('Login data:', this.form);
+    // TODO: backend'e gönder
+  }
 }

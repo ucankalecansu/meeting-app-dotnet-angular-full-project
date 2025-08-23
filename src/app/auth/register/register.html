@@ -1,32 +1,95 @@
 <div class="d-flex align-items-center justify-content-center vh-100 bg-light">
     <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
-        <h3 class="text-center mb-4">🔑 Kayıt Ol</h3>
-        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-            <div class="mb-3">
-                <label class="form-label">FirstName</label>
-                <input [(ngModel)]="form.firstName" name="firstName" type="text" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">LastName</label>
-                <input [(ngModel)]="form.lastName" name="lastName" type="text" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input [(ngModel)]="form.email" name="email" type="text" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Phone</label>
-                <input [(ngModel)]="form.phone" name="phone" type="text" class="form-control"  required />
-              </div>
-            <div class="mb-3">
-                <label class="form-label">Şifre</label>
-                <input [(ngModel)]="form.passwordHash" name="passwordHash" type="password" class="form-control"
-                    placeholder="••••••••" required />
-            </div>
-            <button class="btn btn-primary w-100">Kayıt Ol</button>
-        </form>
-        <div class="text-center mt-3">
-            <small>Hesabın var mı? <a routerLink="/login">Giriş Yap</a></small>
+      <h3 class="text-center mb-4">🔑 Kayıt Ol</h3>
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
+        
+        <!-- FirstName -->
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input
+            [(ngModel)]="form.firstName"
+            name="firstName"
+            type="text"
+            class="form-control"
+            required
+            #firstName="ngModel"
+          />
+          <div *ngIf="firstName.invalid && firstName.touched" class="text-danger small mt-1">
+            Lütfen adınızı giriniz
+          </div>
         </div>
-    </div>
-</div>
+  
+        <!-- LastName -->
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          <input
+            [(ngModel)]="form.lastName"
+            name="lastName"
+            type="text"
+            class="form-control"
+            required
+            #lastName="ngModel"
+          />
+          <div *ngIf="lastName.invalid && lastName.touched" class="text-danger small mt-1">
+            Lütfen soyadınızı giriniz
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            [(ngModel)]="form.email"
+            name="email"
+            type="email"
+            class="form-control"
+            required
+            email
+            #email="ngModel"
+          />
+          <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+            Geçerli bir email giriniz
+          </div>
+        </div>
+  
+        <!-- Phone -->
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input
+            [(ngModel)]="form.phone"
+            name="phone"
+            type="text"
+            class="form-control"
+            pattern="^\\+?[0-9\\s-]{7,15}$"
+            #phone="ngModel"
+          />
+          <div *ngIf="phone.invalid && phone.touched" class="text-danger small mt-1">
+            Geçerli bir telefon numarası giriniz
+          </div>
+        </div>
+  
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Şifre</label>
+          <input
+            [(ngModel)]="form.passwordHash"
+            name="passwordHash"
+            type="password"
+            class="form-control"
+            placeholder="••••••••"
+            required
+            minlength="6"
+            #password="ngModel"
+          />
+  
+          <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
+            Şifre en az 6 karakter olmalıdır
+          </div>
+        </div>
+  
+        <button class="btn btn-primary w-100" [disabled]="registerForm.invalid">Kayıt Ol</button>
+      </form>
+  
+      <div class="text-center mt-3">
+        <small>Hesabın var mı? <a routerLink="/login">Giriş Yap</a></small>
+      </div>

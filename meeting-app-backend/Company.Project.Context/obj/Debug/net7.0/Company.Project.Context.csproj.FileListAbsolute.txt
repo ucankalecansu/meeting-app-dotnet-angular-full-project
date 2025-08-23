@@ -1,0 +1,17 @@
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Context.deps.json
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Context.runtimeconfig.json
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Context.dll
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Context.pdb
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Model.dll
+/app/Company.Project.Context/bin/Debug/net7.0/Company.Project.Model.pdb
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.csproj.AssemblyReference.cache
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.GeneratedMSBuildEditorConfig.editorconfig
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.AssemblyInfoInputs.cache
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.AssemblyInfo.cs
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.csproj.CoreCompileInputs.cache
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.csproj.CopyComplete
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.dll
+/app/Company.Project.Context/obj/Debug/net7.0/refint/Company.Project.Context.dll
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.pdb
+/app/Company.Project.Context/obj/Debug/net7.0/Company.Project.Context.genruntimeconfig.cache
+/app/Company.Project.Context/obj/Debug/net7.0/ref/Company.Project.Context.dll

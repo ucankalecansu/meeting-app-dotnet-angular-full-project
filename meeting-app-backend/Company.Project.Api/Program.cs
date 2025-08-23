@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using Company.Project.Api.Services;
 using Company.Project.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,17 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
+// Uygulama servislerini ekle
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<PasswordService>();
+builder.Services.AddScoped<EmailService>();
+
+// İptal edilen toplantıları temizleme background service
+builder.Services.AddHostedService<CancelledMeetingCleanupService>();
+
+// Dosya yükleme için statik dosya desteği
+builder.Services.AddDirectoryBrowser();
+
 // Veritabanı bağlantısı
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -79,17 +91,34 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Veritabanını migrasyon ile güncelle
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<AppDbContext>();
+        dbContext.Database.EnsureCreated(); // Yeni alanlar için tablonun güncellenmesini sağlar
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Veritabanı güncellenirken bir hata oluştu.");
+    }
 }
+
+// Configure the HTTP request pipeline.
+// Swagger'ı tüm ortamlarda aktif ediyoruz (test amaçlı)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Uploads klasörüne erişim için statik dosya desteği
+app.UseStaticFiles();
 
 app.MapControllers();
 

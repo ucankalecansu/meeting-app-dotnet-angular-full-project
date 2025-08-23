@@ -9,9 +9,10 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<AppUser> Users => Set<AppUser>();
-    public DbSet<Meeting> Meetings => Set<Meeting>();
-    public DbSet<MeetingDocument> MeetingDocuments => Set<MeetingDocument>();
+    public DbSet<AppUser> Users { get; set; }
+    public DbSet<Meeting> Meetings { get; set; }
+    public DbSet<MeetingDocument> MeetingDocuments { get; set; }
+    public DbSet<DeletedMeetingLog> DeletedMeetingLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

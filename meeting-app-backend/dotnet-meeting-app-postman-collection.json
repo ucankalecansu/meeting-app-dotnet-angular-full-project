@@ -1,0 +1,400 @@
+{
+  "info": {
+    "name": "Meeting App .NET Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"User\",\n    \"email\": \"test@example.com\",\n    \"phone\": \"5551234567\",\n    \"password\": \"Test123!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/auth/profile-image",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "auth",
+                "profile-image"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Meetings",
+      "item": [
+        {
+          "name": "Get All Meetings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5001/api/meetings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Meeting By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5001/api/meetings/{{meetingId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Meeting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Test Meeting\",\n    \"startAt\": \"2025-09-01T10:00:00\",\n    \"endAt\": \"2025-09-01T11:00:00\",\n    \"description\": \"Test meeting description\",\n    \"participants\": [\"test@example.com\", \"admin@example.com\"],\n    \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/meetings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Meeting",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Test Meeting\",\n    \"startAt\": \"2025-09-01T10:30:00\",\n    \"endAt\": \"2025-09-01T11:30:00\",\n    \"description\": \"This meeting has been updated via Postman\",\n    \"participants\": [\"test@example.com\", \"admin@example.com\", \"manager@example.com\"],\n    \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/meetings/{{meetingId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cancel Meeting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cancellationReason\": \"Meeting cancelled due to scheduling conflict\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/meetings/{{meetingId}}/cancel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}",
+                "cancel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Meeting Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/document.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5001/api/meetings/{{meetingId}}/documents",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}",
+                "documents"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Meeting Notification",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5001/api/meetings/{{meetingId}}/notify",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}",
+                "notify"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Login işleminden sonra token'ı almak için",
+          "if (pm.info.requestName === \"Login\") {",
+          "    var jsonData;",
+          "    try {",
+          "        jsonData = pm.response.json();",
+          "    } catch (e) {",
+          "        console.error(\"Response parsing error:\", e);",
+          "        pm.test(\"Response should be valid JSON\", function() {",
+          "            pm.expect(false).to.be.true;",
+          "        });",
+          "        return;",
+          "    }",
+          "    ",
+          "    if (pm.response.code === 200) {",
+          "        pm.test(\"Login successful\", function() {",
+          "            pm.expect(jsonData.data).to.have.property('token');",
+          "            pm.expect(jsonData.success).to.be.true;",
+          "        });",
+          "        ",
+          "        if (jsonData.data && jsonData.data.token) {",
+          "            pm.environment.set(\"token\", jsonData.data.token);",
+          "            console.log(\"Token saved to environment variables\");",
+          "        }",
+          "    } else {",
+          "        pm.test(\"Login failed with proper error message\", function() {",
+          "            pm.expect(jsonData.success).to.be.false;",
+          "            pm.expect(jsonData.message).to.exist;",
+          "            console.log(\"Login error: \" + jsonData.message);",
+          "        });",
+          "    }",
+          "}",
+          "",
+          "// Meeting oluşturduktan sonra meeting ID'yi almak için",
+          "if (pm.info.requestName === \"Create Meeting\" && pm.response.code === 200) {",
+          "    var jsonData = pm.response.json();",
+          "    if (jsonData.data && jsonData.data.id) {",
+          "        pm.environment.set(\"meetingId\", jsonData.data.id);",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "meetingId",
+      "value": ""
+    },
+    {
+      "key": "login_email",
+      "value": "test@example.com",
+      "description": "Login için kullanılacak email"
+    },
+    {
+      "key": "login_password",
+      "value": "Test123!",
+      "description": "Login için kullanılacak şifre"
+    }
+  ]
+}

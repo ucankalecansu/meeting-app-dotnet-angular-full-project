@@ -1,0 +1,11 @@
+/app/Company.Project.Model/bin/Debug/net7.0/Company.Project.Model.deps.json
+/app/Company.Project.Model/bin/Debug/net7.0/Company.Project.Model.dll
+/app/Company.Project.Model/bin/Debug/net7.0/Company.Project.Model.pdb
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.GeneratedMSBuildEditorConfig.editorconfig
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.AssemblyInfoInputs.cache
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.AssemblyInfo.cs
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.csproj.CoreCompileInputs.cache
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.dll
+/app/Company.Project.Model/obj/Debug/net7.0/refint/Company.Project.Model.dll
+/app/Company.Project.Model/obj/Debug/net7.0/Company.Project.Model.pdb
+/app/Company.Project.Model/obj/Debug/net7.0/ref/Company.Project.Model.dll

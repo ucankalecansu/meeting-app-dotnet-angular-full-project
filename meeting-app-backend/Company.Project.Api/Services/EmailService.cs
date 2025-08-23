@@ -49,6 +49,62 @@ public class EmailService
 
         await SendEmailAsync(email, subject, body);
     }
+    
+    public async Task SendMeetingUpdateNotificationAsync(string email, string name, string meetingTitle, DateTime startDate, DateTime endDate)
+    {
+        var subject = $"Toplantı Güncellemesi: {meetingTitle}";
+        var body = $@"<html>
+            <body>
+                <h2>Merhaba {name},</h2>
+                <p><strong>Katılımcısı olduğunuz toplantı güncellendi!</strong></p>
+                <div style='padding: 15px; background-color: #f5f5f5; border-left: 5px solid #FFA726; margin-bottom: 15px;'>
+                    <h3>{meetingTitle}</h3>
+                    <p><strong>Yeni Başlangıç:</strong> {startDate:dd MMMM yyyy HH:mm}</p>
+                    <p><strong>Yeni Bitiş:</strong> {endDate:dd MMMM yyyy HH:mm}</p>
+                </div>
+                <p>Lütfen takviminizdeki ilgili kayıtları güncelleyiniz.</p>
+                <p>Teşekkürler,<br>Toplantı Yönetim Ekibi</p>
+            </body>
+        </html>";
+
+        await SendEmailAsync(email, subject, body);
+    }
+    
+    public async Task SendMeetingCancelNotificationAsync(string email, string name, string meetingTitle)
+    {
+        var subject = $"Toplantı İptal Bildirimi: {meetingTitle}";
+        var body = $@"<html>
+            <body>
+                <h2>Merhaba {name},</h2>
+                <p><strong>Aşağıdaki toplantı iptal edilmiştir:</strong></p>
+                <div style='padding: 15px; background-color: #f5f5f5; border-left: 5px solid #F44336; margin-bottom: 15px;'>
+                    <h3>{meetingTitle}</h3>
+                </div>
+                <p>Lütfen takviminizdeki ilgili kayıtları güncelleyiniz.</p>
+                <p>Teşekkürler,<br>Toplantı Yönetim Ekibi</p>
+            </body>
+        </html>";
+
+        await SendEmailAsync(email, subject, body);
+    }
+    
+    public async Task SendMeetingDeleteNotificationAsync(string email, string name, string meetingTitle)
+    {
+        var subject = $"Toplantı Silindi: {meetingTitle}";
+        var body = $@"<html>
+            <body>
+                <h2>Merhaba {name},</h2>
+                <p><strong>Aşağıdaki toplantı sistemden tamamen silinmiştir:</strong></p>
+                <div style='padding: 15px; background-color: #f5f5f5; border-left: 5px solid #9C27B0; margin-bottom: 15px;'>
+                    <h3>{meetingTitle}</h3>
+                </div>
+                <p>Lütfen takviminizdeki ilgili kayıtları güncelleyiniz.</p>
+                <p>Teşekkürler,<br>Toplantı Yönetim Ekibi</p>
+            </body>
+        </html>";
+
+        await SendEmailAsync(email, subject, body);
+    }
 
     private async Task SendEmailAsync(string toEmail, string subject, string body)
     {

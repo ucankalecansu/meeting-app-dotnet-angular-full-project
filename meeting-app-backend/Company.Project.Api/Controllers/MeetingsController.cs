@@ -175,6 +175,46 @@ public class MeetingsController : ControllerBase
             meeting.Participants = request.Participants ?? Array.Empty<string>();
 
             await _dbContext.SaveChangesAsync();
+            
+            // Katılımcılara bildirim e-postası gönder
+            if (meeting.Participants != null && meeting.Participants.Count() > 0)
+            {
+                try
+                {
+                    foreach (var participantEmail in meeting.Participants)
+                    {
+                        // Kullanıcının tam adını bul (eğer kullanıcı veritabanında kayıtlı ise)
+                        if (participantEmail == null) continue;
+                        string participantName = participantEmail; // Varsayılan olarak e-posta adresini kullan
+                        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == participantEmail);
+                        if (user != null)
+                        {
+                            participantName = $"{user.FirstName} {user.LastName}";
+                        }
+                        
+                        // Asenkron olarak güncelleme e-postası gönder
+                        _ = _emailService.SendMeetingUpdateNotificationAsync(
+                            participantEmail,
+                            participantName,
+                            meeting.Title,
+                            meeting.StartAt,
+                            meeting.EndAt
+                        ).ContinueWith(t => 
+                        {
+                            if (t.IsFaulted)
+                            {
+                                _logger.LogError(t.Exception, "Toplantı güncelleme bildirimi gönderilirken hata oluştu. Alıcı: {Email}", participantEmail);
+                            }
+                        });
+                    }
+                    _logger.LogInformation("Toplantı güncelleme bildirimleri {Count} katılımcıya gönderiliyor.", meeting.Participants.Count());
+                }
+                catch (Exception ex)
+                {
+                    // E-posta gönderimindeki hata toplantı güncellemeyi etkilemesin
+                    _logger.LogError(ex, "Toplantı güncelleme bildirimleri gönderilirken hata oluştu. Toplantı ID: {Id}", meeting.Id);
+                }
+            }
 
             // Başarılı yanıt döndür
             return Ok(new ApiResponse<Meeting>(true, "Toplantı başarıyla güncellendi.", meeting));
@@ -245,6 +285,44 @@ public class MeetingsController : ControllerBase
             }
 
             await _dbContext.SaveChangesAsync();
+            
+            // Katılımcılara iptal bildirimi e-postası gönder
+            if (meeting.Participants != null && meeting.Participants.Count() > 0)
+            {
+                try
+                {
+                    foreach (var participantEmail in meeting.Participants)
+                    {
+                        // Kullanıcının tam adını bul (eğer kullanıcı veritabanında kayıtlı ise)
+                        if (participantEmail == null) continue;
+                        string participantName = participantEmail; // Varsayılan olarak e-posta adresini kullan
+                        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == participantEmail);
+                        if (user != null)
+                        {
+                            participantName = $"{user.FirstName} {user.LastName}";
+                        }
+                        
+                        // Asenkron olarak iptal e-postası gönder
+                        _ = _emailService.SendMeetingCancelNotificationAsync(
+                            participantEmail,
+                            participantName,
+                            meeting.Title
+                        ).ContinueWith(t => 
+                        {
+                            if (t.IsFaulted)
+                            {
+                                _logger.LogError(t.Exception, "Toplantı iptal bildirimi gönderilirken hata oluştu. Alıcı: {Email}", participantEmail);
+                            }
+                        });
+                    }
+                    _logger.LogInformation("Toplantı iptal bildirimleri {Count} katılımcıya gönderiliyor.", meeting.Participants.Count());
+                }
+                catch (Exception ex)
+                {
+                    // E-posta gönderimindeki hata toplantı iptal işlemini etkilemesin
+                    _logger.LogError(ex, "Toplantı iptal bildirimleri gönderilirken hata oluştu. Toplantı ID: {Id}", meeting.Id);
+                }
+            }
 
             // Başarılı yanıt döndür
             return Ok(new ApiResponse<Meeting>(true, "Toplantı başarıyla iptal edildi.", meeting));

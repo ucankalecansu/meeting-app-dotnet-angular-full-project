@@ -107,7 +107,7 @@ closeParticipants() {
 
   deleteMeeting(id: number) {
     if (!confirm('Silmek istediğine emin misin?')) return;
-    this.meetingService.deleteMeeting(id).subscribe({
+    this.meetingService.cancelMeeting(id).subscribe({
       next: () => this.fetchMeetings(),
       error: () => alert('Silme hatası')
     });
@@ -117,8 +117,8 @@ closeParticipants() {
   fetchUsers() {
     this.usersLoading = true;
     this.userService.getUsers().subscribe({
-      next: (data) => {
-        this.users = data || [];
+      next: (data:any) => {
+        this.users = data.data || [];
         // email -> "Ad Soyad (email)" map
         this.userLabelMap = {};
         for (const u of this.users) {
@@ -201,7 +201,7 @@ closeParticipants() {
     // API string bekliyorsa join
     const payload = {
       ...this.form,
-      participants: (this.form.participants || []).join(',')
+      participants: [(this.form.participants || []).join(',')]
     };
 
     if (this.editingId == null) {

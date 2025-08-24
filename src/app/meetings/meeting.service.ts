@@ -5,7 +5,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class MeetingService {
-    private apiUrl = 'http://localhost:4000/api/meetings';
+    private apiUrl = 'http://localhost:5001/api/meetings';
 
     constructor(private http: HttpClient, private auth: AuthService) {}
 
@@ -32,6 +32,9 @@ export class MeetingService {
 
     deleteMeeting(id:number):Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${id}`,this.getAuthHeaders());
+    }
+    cancelMeeting(id:number):Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/${id}/cancel`,this.getAuthHeaders());
     }
 
 }

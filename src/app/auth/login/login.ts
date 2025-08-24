@@ -21,8 +21,8 @@ export class LoginComponent {
     this.auth.login(this.form).subscribe({
       next: (res: any) => {
         // backend token dönüyorsa sakla
-        if (res.token) {
-          this.auth.saveToken(res.token);
+        if (res.data.token || res.token ) {
+          this.auth.saveToken(res.data.token ? res.data.token : res.token);
           this.router.navigate(['/meetings']); // meetings'e yönlendir
         } else {
           alert('Token alınamadı, login başarısız');

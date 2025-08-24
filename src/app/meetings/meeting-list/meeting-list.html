@@ -24,8 +24,8 @@
           <tr *ngFor="let m of paginatedMeetings">
             <td>{{ m.title }}</td>
             <td class="text-truncate" style="max-width:300px">{{ m.description }}</td>
-            <td>{{ m.startDate | date:'short' }}</td>
-            <td>{{ m.endDate | date:'short' }}</td>
+            <td>{{ m.startDate || m.startAt | date:'short' }}</td>
+            <td>{{ m.endDate || m.endAt | date:'short' }}</td>
             <td>{{ mapParticipantsToLabels(m.participants) }}</td>
             <td>{{ m.status || 'active' }}</td>
             <td>

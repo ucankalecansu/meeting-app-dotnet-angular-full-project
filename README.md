@@ -1,6 +1,6 @@
 # Meeting App .NET & Angular Project
 
-Bu proje, toplantı yönetimi için geliştirilmiş bir .NET Core backend ve Angular frontend uygulamasıdır.
+Bu proje, toplantı yönetimi için geliştirilmiş bir .NET Core backend ve Angular frontend uygulamasıdır. Uygulama, kullanıcı kaydı, toplantı oluşturma, güncelleme ve iptal etme işlemleri için otomatik e-posta bildirimleri gönderebilmektedir.
 
 ## Proje Yapısı
 

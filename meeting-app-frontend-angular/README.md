@@ -1,1 +1,0 @@
-# meeting-app-frontend-angular

@@ -72,7 +72,7 @@ public class MeetingsController : ControllerBase
         try
         {
             // Başlangıç bitiş kontrolü
-            if (request.EndAt <= request.StartAt)
+            if (request.EndAt < request.StartAt)
             {
                 return BadRequest(new ApiResponse<Meeting>(false, "Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.", null));
             }
@@ -161,7 +161,7 @@ public class MeetingsController : ControllerBase
             }
 
             // Başlangıç bitiş kontrolü
-            if (request.EndAt <= request.StartAt)
+            if (request.EndAt < request.StartAt)
             {
                 return BadRequest(new ApiResponse<Meeting>(false, "Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.", null));
             }
